@@ -1,0 +1,21 @@
+{
+  "name": "todo-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ilmans",
+  "license": "ISC",
+  "devDependencies": {
+    "mongoose": "^5.5.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "volleyball": "^1.5.1"
+  }
+}
