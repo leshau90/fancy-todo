@@ -7,14 +7,21 @@ const Schema = mongoose.Schema
 // emailValidators = [{ validator: isEmail, msg: 'please supply a valid email' }, { validator: uniqueEmail, msg: 'email already in use' }]
 
 let todoSchema = new Schema({
+    //name, description, status, due date
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
-    title: String,
-    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+    name: String,
+    description: String,
+    link:String,    
+    status: String,
+    due_date: Date,    
+    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
+    project:{ type: Schema.Types.ObjectId, ref: 'Project' }
 })
 
 let tagSchema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
     title: String,
+    
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
     users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }]
@@ -34,27 +41,25 @@ let userSchema = new Schema({
     password: { type: String, select: false },
     image: String,
 
-    inviteFriends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    toBeAcceptedFriends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    requestFriend: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    pendingFriend: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    rejectedFriend: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     tags: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
 let projectSchema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
-    isbn: String,
-    title: String,
-    author: String,
-    category: String,
-    stock: Number,
+    name:String,
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    todo: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    invitedParticipants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    todos: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
-
+//synchronous
 userSchema.pre('save', function () {
-    if (this.isModified('password')) { this.password = bcrypt.hashSync(this.password)}
+    if (this.isModified('password')) { this.password = bcrypt.hashSync(this.password,6)}
 })
 
 userSchema.methods.comparePassword = function (str) {

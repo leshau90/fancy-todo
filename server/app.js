@@ -16,10 +16,10 @@ app.use('/', router);
 
 
 app.use(function (error, req, res, next) {
-    console.log('~~~caught by last error middlware~~~')
+    console.log('vvvvvvv caught by last error middlware vvvvvvvv')
     if (error.fromRoute) console.log(error.fromRoute)
     console.log(error)
-    console.log('~~~~~~')
+    console.log('^^^^^ERROR^^^^^')
     if (!error.statusCode) error.statusCode = 500
     res.status(error.statusCode).json({ message: error.message, error });
 });

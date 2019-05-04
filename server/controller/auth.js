@@ -15,6 +15,7 @@ const functions = {
             res.status(201).json({ user: { _id, name, email } })
         } else throw givesError(404, 'user cannot be created')
     }),
+
     login: wrapAsync((req, res) => {
         let user = await User.findOne({ email: req.body.email }).select('+password')
         if (user && user.comparePassword(req.body.password)) {
@@ -24,6 +25,7 @@ const functions = {
         }
         else throw givesError(404, 'user cannot be created')
     }),
+
     googleSignin: wrapAsync((req, res) => {
         // console.log(process.env.GOOGLE_CLIENT_ID)   
         
@@ -31,6 +33,7 @@ const functions = {
             idToken: req.body.token,
             audience: process.env.GOOGLE_CLIENT_ID
         })
+
         if (ticket) {
             let { email, name } = ticket.getPayload()
             let user = await User.findOne({ email })
@@ -43,11 +46,6 @@ const functions = {
         } else throw givesError(404, 'have you supplied the right google credentials')
     }),
 }
-
-
-
-
-
 
 
 module.exports = functions
