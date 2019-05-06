@@ -1,7 +1,9 @@
 const router = require('express').Router()
-const auth = require(`../controller/auth`)
+// const auth = require(`../controller/auth`)
+const auth = require('../controller/auth')
 
-router.use('/auth', authRouter)
-router.use('/todos', todoRouter)
+router.post('/login', auth.login)
+router.post('/google-login', auth.googleLogin)
+router.post('/register', auth.register)
 
 module.exports = router

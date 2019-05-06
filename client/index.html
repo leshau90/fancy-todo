@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="google-signin-client_id"
+        content="789380527626-utoa7as2iuik74vamu63urbv7jhh7qc4.apps.googleusercontent.com">
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script>  -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- <script>
+        window.onLoadCallback = function () {
+            gapi.auth2.init({
+                client_id: '789380527626-hj80ft10rgbj8u4tanp2l78v8bm7clgv.apps.googleusercontent.com'
+            });
+        }
+    </script> -->
+
+    <title>Fancy Todo</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper green darken-2">
+            <a href="#" class="brand-logo center">Fancy Todo</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class='login-button'><a class="modal-trigger" href="#login-modal">Login</a></li>
+                <li class='register-button'><a class="modal-trigger" href="#register-modal">Register</a></li>
+                <li class='logout-button'><a>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- actually hidden -->
+    <ul class="sidenav" id="mobile-demo">
+        <li class='login-button'><a class="modal-trigger" href="#login-modal">Login</a></li>
+        <li class='register-button'><a class="modal-trigger" href="#register-modal">Register</a></li>
+        <li class='logout-button'><a>Logout</a></li>
+    </ul>
+
+    <main>
+        <div class="container center">
+
+            <div class="row">
+
+                <div>
+                    <p id="debug">
+                    </p>
+                </div>
+                <div id="sending" class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+                <div class="todo-list s12">
+                    <ul class="collapsible expandable">
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">place</i>Second
+                            </div>
+                            <div class="collapsible-body">
+                                <span>Lorem ipsum dolor sit amet.</span>
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">place</i>Second
+                                        </div>
+                                        <div class="collapsible-body">
+                                            <span>Lorem ipsum dolor sit amet.</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">place</i>Second
+                                        </div>
+                                        <div class="collapsible-body">
+                                            <span>Lorem ipsum dolor sit amet.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">place</i>Second
+                            </div>
+                            <div class="collapsible-body">
+                                <span>Lorem ipsum dolor sit amet.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">whatshot</i>Third
+                            </div>
+                            <div class="collapsible-body">
+                                <span>Lorem ipsum dolor sit amet.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class="project-list s12"></div>
+                <div class="divider"></div>
+                <div class="profile-info s12"></div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- Modal Structures -->
+    <div id="login-modal" class="modal">
+        <form id="form-login">
+            <div class="modal-content">
+                <h4 class='center'>Login</h4>
+                <label> email </label>
+                <input placeholder="email" id="login-email" type="email" class="validate" />
+                <label> password </label>
+                <input placeholder="password" id="login-password" type="password" class="validate" />
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn green">
+                    login
+                </button>
+                <a id='login-close' class="modal-close waves-effect waves-green btn-flat">
+                    close
+                </a>
+            </div>
+            <div class="modal-footer">
+                <div class='center'>or use ....</div>
+                <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+            </div>
+        </form>
+    </div>
+
+    <div id="register-modal" class="modal">
+        <form id="form-register">
+            <div class="modal-content">
+                <label> Full Name </label>
+                <input placeholder="username" id="reg-name" type="text" class="validate" />
+                <label> email </label>
+                <input placeholder="email" id="reg-email" type="email" class="validate" />
+                <label> password </label>
+                <input placeholder="password" id="reg-password" type="password" class="validate" />
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn-large green">
+                    register
+                </button>
+                <a id='register-close' class="modal-close waves-effect waves-green btn-flat">
+                    close
+                </a>
+            </div>
+        </form>
+    </div>
+
+
+    <div id="new-todo-modal" class="modal">
+        <form id="form-register">
+            <div class="modal-content">
+                <label> todo title </label>
+                <input placeholder="username" id="new-todo-name" type="text" class="validate" />
+                <label>describe the todo</label>
+                <textarea placeholder="give the description" id="new-todo-description"
+                    class="materialize-textarea"></textarea>
+                <label> dueDate </label>
+                <input type="text" id='new-todo-due-date' class="datepicker">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn-large green">
+                    register
+                </button>
+                <a id='new-todo-close' class="modal-close waves-effect waves-green btn-flat">
+                    close
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- buttons -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating green lighten-2 modal-trigger" href="#new-todo-modal">
+                    <i class=" material-icons">insert_invitation</i></a></li>
+        </ul>
+    </div>
+
+
+
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script> -->    
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

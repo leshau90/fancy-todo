@@ -11,34 +11,35 @@ let todoSchema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
     name: String,
     description: String,
-    link:String,    
+    // link: String,
     status: String,
-    due_date: Date,    
+    due_date: Date,
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
-    project:{ type: Schema.Types.ObjectId, ref: 'Project' }
+    project: { type: Schema.Types.ObjectId, ref: 'Project' }
 })
 
 let tagSchema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
     title: String,
-    
+
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
     users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }]
 })
 
 let userSchema = new Schema({
-    username: String,
+    name: { type: String, required: true },    
     email: {
         type: String, match: [/\w+@\w+\.\w+/, 'please supply a valid email format'],
+        required:true,
         validate: [{
             validator: async function (val) {
-                let already = await Member.findOne({ _id: { $ne: this._id }, email: val })
+                let already = await User.findOne({ _id: { $ne: this._id }, email: val })                
                 return already == null
             }, msg: 'email already in use'
         }]
     },
-    password: { type: String, select: false },
+    password: { type: String, select: false, required:true },
     image: String,
 
     requestFriend: [{ type: Schema.Types.ObjectId, ref: 'User' }],
@@ -50,7 +51,7 @@ let userSchema = new Schema({
 
 let projectSchema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
-    name:String,
+    name: String,
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     invitedParticipants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
@@ -59,7 +60,7 @@ let projectSchema = new Schema({
 
 //synchronous
 userSchema.pre('save', function () {
-    if (this.isModified('password')) { this.password = bcrypt.hashSync(this.password,6)}
+    if (this.isModified('password')) { this.password = bcrypt.hashSync(this.password, 6) }
 })
 
 userSchema.methods.comparePassword = function (str) {
